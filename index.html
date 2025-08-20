@@ -93,6 +93,14 @@ Currently studying to become a Network and Support Technician at Jensen Educatio
     };
 
     input.addEventListener("keydown", function (e) {
+      // Simulate Ctrl+C
+      if (e.ctrlKey && e.key.toLowerCase() === "c") {
+        terminal.innerHTML += "^C\n";
+        input.value = ""; // clear current input
+        return;
+      }
+
+      // Handle Enter key
       if (e.key === "Enter") {
         const cmd = input.value.trim();
         terminal.innerHTML += `$ ${cmd}\n`;
@@ -110,35 +118,6 @@ Currently studying to become a Network and Support Technician at Jensen Educatio
         window.scrollTo(0, document.body.scrollHeight);
       }
     });
-    input.addEventListener("keydown", function (e) {
-  // Simulate Ctrl+C
-  if (e.ctrlKey && e.key.toLowerCase() === "c") {
-    terminal.innerHTML += "^C\n";
-    input.value = ""; // clear current input
-    return;
-  }
-
-  // Handle Enter key
-  if (e.key === "Enter") {
-    const cmd = input.value.trim();
-    terminal.innerHTML += `$ ${cmd}\n`;
-
-    if (cmd === "clear") {
-      terminal.innerHTML = "";
-    } else if (commands[cmd]) {
-      terminal.innerHTML += commands[cmd] + "\n";
-    } else {
-      terminal.innerHTML += `Command not found: ${cmd}\n`;
-    }
-
-    terminal.innerHTML += "\n";
-    input.value = "";
-    window.scrollTo(0, document.body.scrollHeight);
-  }
-});
-
   </script>
 </body>
 </html>
-
-
