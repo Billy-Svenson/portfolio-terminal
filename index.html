@@ -93,15 +93,19 @@ Currently studying to become a Network and Support Technician at Jensen Educatio
     };
 
     input.addEventListener("keydown", function (e) {
+      console.log("Key pressed:", e.key, "ctrl?", e.ctrlKey); // DEBUG
+
       // Simulate Ctrl+C
       if (e.ctrlKey && e.key.toLowerCase() === "c") {
         terminal.innerHTML += "^C\n";
-        input.value = ""; // clear current input
+        input.value = "";
+        console.log("^C simulated"); // DEBUG
         return;
       }
 
       // Handle Enter key
       if (e.key === "Enter") {
+        console.log("Enter pressed, value:", input.value); // DEBUG
         const cmd = input.value.trim();
         terminal.innerHTML += `$ ${cmd}\n`;
 
