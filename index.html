@@ -1,51 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Bilguun's Portfolio</title>
-  <style>
-    body {
-      background-color: black;
-      color: #33ff33;
-      font-family: monospace;
-      padding: 50px;
-    }
-    #terminal {
-      white-space: pre-wrap;
-    }
-    .input-line {
-      display: flex;
-    }
-    .prompt {
-      color: #33ff33;
-    }
-    input {
-      background: black;
-      border: none;
-      color: #33ff33;
-      font-family: monospace;
-      width: 100%;
-      outline: none;
-    }
-  </style>
-</head>
-<body>
-  <div id="terminal">
-    Welcome to Bilguun's Portfolio Terminal.<br>
-    Type <b>help</b> to see available commands.<br><br>
-  </div>
+<script>
+  const terminal = document.getElementById("terminal");
+  const input = document.getElementById("commandInput");
 
-  <div class="input-line">
-    <span class="prompt">$ </span>
-    <input type="text" id="commandInput" autofocus />
-  </div>
-
-  <script>
-    const terminal = document.getElementById("terminal");
-    const input = document.getElementById("commandInput");
-
-    const commands = {
-      help: `Available commands:
+  const commands = {
+    help: `Available commands:
 - help: Show this message
 - about: About me
 - skills: My technical skills
@@ -54,12 +12,12 @@
 - contact: How to reach me
 - clear: Clear the screen`,
 
-      about: `Hi, I'm Bilguun Jargalsaikhan (35). 
+    about: `Hi, I'm Bilguun Jargalsaikhan (35). 
 Originally from Mongolia, living in Sweden for 7 years with my family.
 Passionate about technology, networking, and solving problems.
 Currently studying to become a Network and Support Technician at Jensen Education.`,
 
-      skills: `Technical skills:
+    skills: `Technical skills:
 - OpenBSD (basic)
 - Linux (basic)
 - Active Directory (basic)
@@ -68,7 +26,7 @@ Currently studying to become a Network and Support Technician at Jensen Educatio
 - GitHub CLI (basic)
 - Docker Compose (basic)`,
 
-      experience: `Work experience:
+    experience: `Work experience:
 1. CCTV System Specialist - Itmall Ltd, Ulaanbaatar (2012–2018)
    - Installed and maintained CCTV systems
    - Technical support and troubleshooting
@@ -79,49 +37,45 @@ Currently studying to become a Network and Support Technician at Jensen Educatio
    - Developed problem-solving & multitasking
    - Transferred skills useful in IT`,
 
-      education: `Education:
+    education: `Education:
 - Network & Support Technician (ongoing) - Jensen Education, Sweden
 - Economist, National University of Mongolia (2012)
 - High School Diploma (2007)`,
 
-      contact: `Contact me:
+    contact: `Contact me:
 - Phone: +46 70 738 15 66
 - Email: bilguun@netudy.com
 - Location: Haninge, Stockholm
 - GitHub: https://github.com/Billy-Svenson
 - LinkedIn: https://www.linkedin.com/in/bilguun-jargalsaikhan-777a75204/`
-    };
+  }; // ✅ make sure this closes the object cleanly
 
-    input.addEventListener("keydown", function (e) {
-      console.log("Key pressed:", e.key, "ctrl?", e.ctrlKey); // DEBUG
+  input.addEventListener("keydown", function (e) {
+    console.log("Key pressed:", e.key); // DEBUG
 
-      // Simulate Ctrl+C
-      if (e.ctrlKey && e.key.toLowerCase() === "c") {
-        terminal.innerHTML += "^C\n";
-        input.value = "";
-        console.log("^C simulated"); // DEBUG
-        return;
+    // Ctrl+C simulation
+    if (e.ctrlKey && e.key.toLowerCase() === "c") {
+      terminal.innerHTML += "^C\n";
+      input.value = "";
+      return;
+    }
+
+    // Enter key
+    if (e.key === "Enter") {
+      const cmd = input.value.trim();
+      terminal.innerHTML += `$ ${cmd}\n`;
+
+      if (cmd === "clear") {
+        terminal.innerHTML = "";
+      } else if (commands[cmd]) {
+        terminal.innerHTML += commands[cmd] + "\n";
+      } else {
+        terminal.innerHTML += `Command not found: ${cmd}\n`;
       }
 
-      // Handle Enter key
-      if (e.key === "Enter") {
-        console.log("Enter pressed, value:", input.value); // DEBUG
-        const cmd = input.value.trim();
-        terminal.innerHTML += `$ ${cmd}\n`;
-
-        if (cmd === "clear") {
-          terminal.innerHTML = "";
-        } else if (commands[cmd]) {
-          terminal.innerHTML += commands[cmd] + "\n";
-        } else {
-          terminal.innerHTML += `Command not found: ${cmd}\n`;
-        }
-
-        terminal.innerHTML += "\n";
-        input.value = "";
-        window.scrollTo(0, document.body.scrollHeight);
-      }
-    });
-  </script>
-</body>
-</html>
+      terminal.innerHTML += "\n";
+      input.value = "";
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  });
+</script>
